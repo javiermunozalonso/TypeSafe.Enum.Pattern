@@ -53,23 +53,23 @@ This is the core of the pattern but we can extend it to make more usable, i choo
 I also implement ```Equals(object)``` and ```GetHashCode()``` to make more strong comparing objects.
 
 ``` csharp
-        public override bool Equals(object objct)
-        {
-            var otherTypeSafeEnumPattern = objct as TypeSafeEnumPattern;
+    public override bool Equals(object objct)
+    {
+        var otherTypeSafeEnumPattern = objct as TypeSafeEnumPattern;
 
-            if (otherTypeSafeEnumPattern == null)
-                return false;
+        if (otherTypeSafeEnumPattern == null)
+            return false;
 
-            var typeMatches = GetType().Equals(objct.GetType());
-            var valueMatches = _id.Equals(otherTypeSafeEnumPattern.Id);
+        var typeMatches = GetType().Equals(objct.GetType());
+        var valueMatches = _id.Equals(otherTypeSafeEnumPattern.Id);
 
-            return typeMatches && valueMatches;
-        }
+        return typeMatches && valueMatches;
+    }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(_id, _name);
-        }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_id, _name);
+    }
 ```
 
 Finally, to get more standar, i override comparer operators to make more fit to the code
@@ -111,14 +111,11 @@ With all of this code we've got this full abstract class
             _name = name;
         }
 
-        #region IComparable
         public int CompareTo(object otherEnum)
         {
             return _id.CompareTo(((TypeSafeEnumPattern)otherEnum).Id);
         }
-        #endregion
 
-        #region Override default virtual object methods
         public override bool Equals(object objct)
         {
             var otherEnum = objct as TypeSafeEnumPattern;
@@ -136,9 +133,7 @@ With all of this code we've got this full abstract class
         {
             return HashCode.Combine(_id, _name);
         }
-        #endregion
 
-        #region Override operators
         public static bool operator ==(TypeSafeEnumPattern typeSafeEnumPattern_1, TypeSafeEnumPattern typeSafeEnumPattern_2)
         {
             if (ReferenceEquals(typeSafeEnumPattern_1, null))
@@ -156,7 +151,6 @@ With all of this code we've got this full abstract class
             }
             return !typeSafeEnumPattern_1.Equals(typeSafeEnumPattern_2);
         }
-        #endregion
     }
 ```
 
